@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap');
+
+body {
+    margin: 0;
+    height: 100vh;
+    background-image: url("img/Background.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow-x: hidden;
+}
+
+.container {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-columns: 1fr 600px 1fr;
+}
+
+.container > div {
+    grid-column: auto;
+    border: solid 1px black;
+}
+
+#tandem-ad {
+    place-items: right;
+}
+
+#game-container {
+    width: 600px;
+    align-content: center;
+}
+
+#screen {
+    width: 90%;
+    height: 60%;
+    margin: 5%;
+    background-color: rgb(172, 172, 172);
+    border: solid 1px black;
+    border-radius: 5px;
+}
+
+#location {
+    width: 90%;
+    height: 5%;
+    border-radius: 5px;
+    border: solid 1px black;
+    margin: 5%;
+    background-color: rgb(172, 172, 172);
+    text-align: center;
+    font-size: 40px;
+    font-family: 'Amatic SC', sans-serif;
+    font-weight: bold;
+}
+
+.decor {
+    position: absolute;
+    top: 0;
+}
+
+.left {
+    left: 0;
+}
+
+.right {
+    right: 0;
+}
+
+.pub {
+    z-index: 1;
+    height: 95%;
+}
+
+.vignes {
+    z-index: 2;
+}
+
+.icon {
+    position: absolute;
+    width: 50px;
+    bottom: 0;
+    margin: 50px;
+}
+
+@media (max-width: 1000px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+
+    #festival-ad, #tandem-ad {
+        display: none;
+    }
+
+    #game-container {
+        width: 100%;
+    }
+
+    body {
+        background-position-x: -1100px;
+    }
+}
