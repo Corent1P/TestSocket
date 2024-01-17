@@ -334,3 +334,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Start the animation loop
     animate();
 });
+
+const audio = new Audio("../ressources/sounds/music.ogg");
+audio.play();
+audio.loop();
