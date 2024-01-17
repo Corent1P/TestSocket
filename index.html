@@ -4,21 +4,25 @@
     <title>Tandem Surfer</title>
     <link href="ressources/styles.css" type="text/css" rel="stylesheet" />
     <script src="scripts/location.js"></script>
+    <script src="scripts/menu.js"></script>
+    <script src="scripts/canvas.js" type="module"></script>
+    <link rel="icon" href="ressources/img/TandemLogo.ico" type="image/x-icon">
 </head>
 <body>
     <div class="container">
+        <img class="decor vignes left" src="ressources/img/Vigne_gauche.png" alt="Vigne_gauche">
         <div id="festival-ad">
-            <img class="decor vignes left" src="ressources/img/Vigne_gauche.png" alt="Vigne_gauche">
-            <img class="decor pub left" src="ressources/img/Pub-gauche_1920.png" alt="Vigne_gauche">
+            <img id="pub-left" class="decor left" src="ressources/img/Pub-gauche_1920.png" alt="Vigne_gauche">
         </div>
         <div id="game-container">
-            <canvas id="screen" height="580" width="580"></canvas>
-            <p id="location"></p>
+            <img id="gameLogo" class="game-menu" src="ressources/img/Game_logo.png" alt="Logo Game">
+            <img id="startBtn" class="game-menu" src="ressources/img/Btn_start.png" alt="startLogo">
+            <canvas id="glcanvas" class="hidden game" height="580" width="580"></canvas>
+            <p id="location" class="hidden game"></p>
         </div>
         <div id="tandem-ad">
+            <img id="pub-right" class="decor right" src="ressources/img/Pub_Tandem_1920.png" alt="Vigne_droite">
             <img class="decor vignes right" src="ressources/img/Vigne_droite.png" alt="Vigne_droite">
-            <img class="decor pub right" src="ressources/img/Pub_Tandem_1920.png" alt="Vigne_droite">
         </div>
-        <audio src="./ressources/sounds/music.ogg" autoplay loop></audio>
     </div>
 </body>

@@ -21,10 +21,13 @@ const locations = [
 
 let score = 0;
 
-setInterval(updateScore, 1000);
-
 function updateScore() {
-    if (score % 5 == 0 && score < locations.length * 5)
-        document.getElementById('location').innerText = locations[score / 5];
+    if (score % 10 == 0 && score < locations.length * 10)
+        document.getElementById('location').innerText = locations[score / 10];
     score++;
+}
+
+function launchGame()
+{
+    setInterval(updateScore, 1000);
 }

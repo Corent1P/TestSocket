@@ -16,23 +16,44 @@ body {
     grid-template-columns: 1fr 600px 1fr;
 }
 
-.container > div {
-    grid-column: auto;
-    border: solid 1px black;
-}
-
 #tandem-ad {
     place-items: right;
 }
 
 #game-container {
-    width: 600px;
     align-content: center;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 20vh 20vh 20vh 40vh;
+    justify-items: center;
 }
 
-#screen {
+.hidden {
+    display: none;
+}
+
+.game-menu {
+    justify-self: center;
+}
+
+#gameLogo {
+    grid-row: 1-2;
     width: 90%;
-    height: 60%;
+}
+
+#startBtn {
+    grid-row: 4;
+    width: 30%;
+    z-index: 1;
+}
+
+#startBtn:hover {
+    cursor: pointer;
+}
+
+#glcanvas {
+    grid-row: 1-3;
+    width: 90%;
     margin: 5%;
     background-color: rgb(172, 172, 172);
     border: solid 1px black;
@@ -41,7 +62,7 @@ body {
 
 #location {
     width: 90%;
-    height: 5%;
+    grid-row: 4;
     border-radius: 5px;
     border: solid 1px black;
     margin: 5%;
@@ -65,13 +86,20 @@ body {
     right: 0;
 }
 
-.pub {
-    z-index: 1;
-    height: 95%;
+#pub-left {
+    margin-top: 35vh;
+    margin-left: 5vw;
+    width: 15%;
+}
+
+#pub-right {
+    margin-right: 5%;
+    height: 80%;
 }
 
 .vignes {
-    z-index: 2;
+    z-index: 1;
+    width : 40vw;
 }
 
 .icon {
@@ -96,5 +124,9 @@ body {
 
     body {
         background-position-x: -1100px;
+    }
+
+    .vignes {
+        width: 100vw;
     }
 }
