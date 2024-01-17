@@ -336,5 +336,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 const audio = new Audio("../ressources/sounds/music.ogg");
+audio.load();
 audio.play();
 audio.loop();
