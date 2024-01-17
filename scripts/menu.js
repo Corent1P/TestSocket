@@ -13,6 +13,9 @@ document.addEventListener('DOMContentLoaded', function() {
             element.classList.remove('hidden');
         });
 
+        const audio = getElementById("audio");
+        audio.play()
+        audio.loop();
         launchGame();
     });
 });
