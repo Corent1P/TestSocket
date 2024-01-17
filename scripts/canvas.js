@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const tandemTexture = new Image();
     tandemTexture.src = "../ressources/img/tandem.png";
-
+    
     let score = 0;
 
     function initCanvas() {
