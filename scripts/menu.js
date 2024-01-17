@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
             element.classList.remove('hidden');
         });
 
-        const audio = new Audio("../ressources/sounds/music.ogg");
+        const audio = new Audio('ressources/sounds/music.ogg');
         audio.play()
         audio.loop();
         launchGame();
