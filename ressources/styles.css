@@ -128,6 +128,17 @@ body {
     grid-row-start: 2;
     grid-row-end: 3;
     font-size: 35px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.game {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.visible {
+    opacity: 1;
 }
 
 @media (max-width: 1000px) {

@@ -79,20 +79,28 @@ function nextStep() {
         indexStep++;
         dialogBox.innerText = dialogs[indexDialog][indexStep];
     } else {
-        dialogBox.classList.add('hidden');
-        makeAction(indexDialog);
-        indexStep = 0;
-        indexDialog++;
+        dialogBox.classList.remove('visible');
+        setTimeout(() => {
+            dialogBox.classList.add('hidden');
+            makeAction(indexDialog);
+            indexStep = 0;
+            indexDialog++;
+        }, 500);
     }
 }
 
 function showDialog() {
     if (indexDialog > 0) {
         gamePaused = true;
-        showPauseMenu();
         hideGame();
+        setTimeout(() => {
+            showPauseMenu();
+        }, 500);
     }
     dialogBox.classList.remove('hidden');
+    setTimeout(() => {
+        dialogBox.classList.add('visible')
+    }, 50);
     dialogBox.innerText = dialogs[indexDialog][0];
 }
 
@@ -109,7 +117,10 @@ function hideGame() {
     let gameContent = document.querySelectorAll('.game');
 
     gameContent.forEach(element => {
-        element.classList.add('hidden');
+        element.classList.remove('visible');
+        setTimeout(() => {
+            element.classList.add('hidden');
+        }, 400);
     });
 }
 
@@ -118,5 +129,8 @@ function showGame() {
 
     gameContent.forEach(element => {
         element.classList.remove('hidden');
+        setTimeout(() => {
+            element.classList.add('visible')
+        }, 50);
     });
 }

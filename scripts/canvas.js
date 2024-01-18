@@ -289,24 +289,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Display Score
         ctx.fillStyle = "white";
-        ctx.font = "40px Arial";
-        ctx.fillText("Score: " + score, canvas.width / 2 - 100, canvas.height / 2);
+        ctx.font = "25px Arial";
+        ctx.fillText("Vous êtes arrivé au bout de la Route des Vins !!", 25, canvas.height / 2 - 50);
+
+        ctx.fillStyle = "white";
+        ctx.font = "25px Arial";
+        ctx.fillText("Votre score est de " + score + " point(s).", canvas.width / 2 - 160, canvas.height / 2);
 
         // Draw Restart button
         ctx.fillStyle = "white";
         ctx.font = "30px Arial";
-        ctx.fillText("Click to Restart", canvas.width / 2 - 100, canvas.height / 2 + 75);
+        ctx.fillText("Cliquer pour recommencer", canvas.width / 2 - 175, canvas.height / 2 + 75);
     }
 
     function showStart() {
         ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-
+        
         ctx.fillStyle = "white";
         ctx.font = "30px Arial";
-        ctx.fillText("Click to Start Game", canvas.width / 2 - 125, canvas.height / 2 - 50);
+        ctx.fillText("Cliquer pour commencer", canvas.width / 2 - 175, canvas.height / 2 - 50);
     }
-
+    
     function handleCanvasClick(event) {
         const rect = canvas.getBoundingClientRect();
         const mouseX = event.clientX - rect.left;
@@ -388,11 +392,11 @@ function showPauseMenu() {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     ctx.fillStyle = "white";
-    ctx.font = "30px Arial";
-    ctx.fillText("Game Paused", canvas.width / 2 - 100, canvas.height / 2 - 50);
+    ctx.font = "50px Arial";
+    ctx.fillText("Jeu en pause", canvas.width / 2 - 150, canvas.height / 2 - 25);
 
     // Draw Resume button
     ctx.fillStyle = "white";
     ctx.font = "30px Arial";
-    ctx.fillText("Click to Resume", canvas.width / 2 - 115, canvas.height / 2 + 25);
+    ctx.fillText("Cliquer pour reprendre", canvas.width / 2 - 150, canvas.height / 2 + 100);
 }
