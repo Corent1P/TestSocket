@@ -144,6 +144,7 @@ body {
     .game-btn-container > img {
         width: 200px;
         height: 200px;
+        touch-action: manipulation;
     }
 
     .game-btn-container > img:hover {
