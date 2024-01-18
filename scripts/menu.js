@@ -4,17 +4,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     startBtn.addEventListener('click', function() {
         let menuContent = document.querySelectorAll('.game-menu');
-        let gameContent = document.querySelectorAll('.game');
 
         menuContent.forEach(element => {
             element.classList.add('hidden');
         });
-        gameContent.forEach(element => {
-            element.classList.remove('hidden');
-        });
 
         const audio = new Audio('ressources/sounds/music.ogg');
         audio.play();
-        launchGame();
+        showDialog();
     });
 });

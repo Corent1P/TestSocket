@@ -26,10 +26,12 @@ const locations = [
 ];
 
 let distance = 0;
+let ctx;
+let canvas;
 
 document.addEventListener("DOMContentLoaded", function () {
-    const canvas = document.getElementById("glcanvas");
-    const ctx = canvas.getContext("2d");
+    canvas = document.getElementById("glcanvas");
+    ctx = canvas.getContext("2d");
 
     const backgroundImage = new Image();
     backgroundImage.src = "../ressources/img/backgroundGame.png";
@@ -225,14 +227,6 @@ document.addEventListener("DOMContentLoaded", function () {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
 
-    const scoreDisplay = document.createElement("div");
-    scoreDisplay.style.position = "absolute";
-    scoreDisplay.style.top = "10px";
-    scoreDisplay.style.right = "10px";
-    scoreDisplay.style.color = "white";
-    scoreDisplay.style.font = "20px Arial";
-    document.body.appendChild(scoreDisplay);
-
     function update() {
         clearCanvas();
         drawBackground();
@@ -242,7 +236,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 
         ctx.fillStyle = "white";
         ctx.font = "35px Arial";
-        ctx.fillText("Score: " + score, canvas.width - 175, 40);
+        ctx.fillText("Score: " + score, canvas.width - 200, canvas.height - 30);
 
     }
 
@@ -289,38 +283,19 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    function showPauseMenu() {
-        ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        ctx.fillStyle = "white";
-        ctx.font = "30px Arial";
-        ctx.fillText("Game Paused", canvas.width / 2 - 100, canvas.height / 2 - 50);
-
-        // Draw Resume button
-        ctx.fillRect(canvas.width / 2 - 75, canvas.height / 2, 150, 40);
-        ctx.fillStyle = "black";
-        ctx.font = "20px Arial";
-        ctx.fillText("Resume", canvas.width / 2 - 35, canvas.height / 2 + 25);
-    }
-
     function showScoreboard() {
         ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        ctx.fillStyle = "white";
-        ctx.font = "30px Arial";
-        ctx.fillText("Game Over", canvas.width / 2 - 90, canvas.height / 2 - 50);
-
         // Display Score
-        ctx.font = "20px Arial";
-        ctx.fillText("Score: " + score, canvas.width / 2 - 40, canvas.height / 2);
+        ctx.fillStyle = "white";
+        ctx.font = "40px Arial";
+        ctx.fillText("Score: " + score, canvas.width / 2 - 100, canvas.height / 2);
 
         // Draw Restart button
-        ctx.fillRect(canvas.width / 2 - 75, canvas.height / 2 + 50, 150, 40);
-        ctx.fillStyle = "black";
-        ctx.font = "20px Arial";
-        ctx.fillText("Restart", canvas.width / 2 - 35, canvas.height / 2 + 75);
+        ctx.fillStyle = "white";
+        ctx.font = "30px Arial";
+        ctx.fillText("Click to Restart", canvas.width / 2 - 100, canvas.height / 2 + 75);
     }
 
     function showStart() {
@@ -329,13 +304,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         ctx.fillStyle = "white";
         ctx.font = "30px Arial";
-        ctx.fillText("Start Game", canvas.width / 2 - 90, canvas.height / 2 - 50);
-        
-        // Draw Restart button
-        ctx.fillRect(canvas.width / 2 - 75, canvas.height / 2 + 50, 150, 40);
-        ctx.fillStyle = "black";
-        ctx.font = "20px Arial";
-        ctx.fillText("Start", canvas.width / 2 - 35, canvas.height / 2 + 75);
+        ctx.fillText("Click to Start Game", canvas.width / 2 - 125, canvas.height / 2 - 50);
     }
 
     function handleCanvasClick(event) {
@@ -344,32 +313,18 @@ document.addEventListener("DOMContentLoaded", function () {
         const mouseY = event.clientY - rect.top;
 
         if (gameOver) {
-            // Check if the click is within the Restart button area
-            if (mouseX > canvas.width / 2 - 75 &&
-                mouseX < canvas.width / 2 + 75 &&
-                mouseY > canvas.height / 2 + 50 &&
-                mouseY < canvas.height / 2 + 90) {
-                restartGame();
-            }
+            indexDialog = 1;
+            indexStep = 0;
+            score = 0;
+            distance = 0;
+            gameOver = false;
+            obstacles.length = 0;
+            coins.length = 0;
+            animate();
         } else if (gamePaused) {
-            // Check if the click is within the Resume button area
-            if (mouseX > canvas.width / 2 - 75 &&
-                mouseX < canvas.width / 2 + 75 &&
-                mouseY > canvas.height / 2 &&
-                mouseY < canvas.height / 2 + 40) {
-                gamePaused = false;
-                animate();
-            }
+            gamePaused = false;
+            animate();
         }
-    }
-
-    function restartGame() {
-        score = 0;
-        distance = 0;
-        gameOver = false;
-        obstacles.length = 0;
-        coins.length = 0;
-        animate();
     }
 
     window.addEventListener("keydown", handleKeyPress);
@@ -397,11 +352,15 @@ document.addEventListener("DOMContentLoaded", function () {
     animate();
 });
 
+const importantLocations = [2, 4, 6, 7, 9, 11, 12, 13, 15, 17];
+
 function updateDistance() {
     if (gamePaused || gameOver)
         return;
     if (distance % 7 == 0 && distance < locations.length * 7)
         document.getElementById('location').innerText = locations[distance / 7];
+    if (distance % 7 == 0 && importantLocations.includes(distance / 7))
+        showDialog();
     distance++;
 }
 
@@ -422,4 +381,18 @@ function moveLeft() {
         tandem.targetX -= tandem.speed;
         tandem.lane--;
     }
+}
+
+function showPauseMenu() {
+    ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "white";
+    ctx.font = "30px Arial";
+    ctx.fillText("Game Paused", canvas.width / 2 - 100, canvas.height / 2 - 50);
+
+    // Draw Resume button
+    ctx.fillStyle = "white";
+    ctx.font = "30px Arial";
+    ctx.fillText("Click to Resume", canvas.width / 2 - 115, canvas.height / 2 + 25);
 }

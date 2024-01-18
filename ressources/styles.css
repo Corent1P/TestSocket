@@ -7,6 +7,7 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     overflow-x: hidden;
+    touch-action: manipulation;
 }
 
 .container {
@@ -62,11 +63,12 @@ body {
 
 #location {
     width: 90%;
+    height: fit-content;
     grid-row: 4;
     border-radius: 5px;
     border: solid 1px black;
     margin: 5%;
-    background-color: rgb(172, 172, 172);
+    background-color: burlywood;
     text-align: center;
     font-size: 40px;
     font-family: 'Amatic SC', sans-serif;
@@ -111,6 +113,21 @@ body {
     width: 50px;
     bottom: 0;
     margin: 50px;
+}
+
+.dialogBox {
+    margin: 5%;
+    width: 90%;
+    height: fit-content;
+    border-radius: 25px;
+    padding: 10px;
+    text-align: center;
+    align-content: center;
+    background-color: burlywood;
+    border: solid 1px black;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    font-size: 35px;
 }
 
 @media (max-width: 1000px) {
@@ -166,5 +183,9 @@ body {
 
     .hidden {
         display: none;
+    }
+
+    .dialogBox {
+        font-size: 45px;
     }
 }

@@ -5,6 +5,7 @@
     <link href="ressources/styles.css" type="text/css" rel="stylesheet" />
     <script src="scripts/canvas.js"></script>
     <script src="scripts/menu.js"></script>
+    <script src="scripts/dialogs.js"></script>
     <link rel="icon" href="ressources/img/TandemLogo.ico" type="image/x-icon">
 </head>
 <body>
@@ -14,6 +15,7 @@
             <img id="pub-left" class="decor left" src="ressources/img/Pub-gauche_1920.png" alt="Vigne_gauche">
         </div>
         <div id="game-container">
+            <p class="hidden dialogBox"></p>
             <img id="gameLogo" class="game-menu" src="ressources/img/Game_logo.png" alt="Logo Game">
             <img id="startBtn" class="game-menu" src="ressources/img/Btn_start.png" alt="startLogo">
             <canvas id="glcanvas" class="hidden game" height="580" width="580"></canvas>
@@ -21,7 +23,7 @@
                 <img id="leftMove" src="ressources/img/fleche-gauche.png" alt="btn-right">
                 <img id="rightMove" src="ressources/img/fleche-droite.png" alt="btn-right">
             </div>
-            <p id="location" class="hidden game"></p>
+            <p id="location" class="hidden game">Mulhouse</p>
         </div>
         <div id="tandem-ad">
             <img id="pub-right" class="decor right" src="ressources/img/Pub_Tandem_1920.png" alt="Vigne_droite">
