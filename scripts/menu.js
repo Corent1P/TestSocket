@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         const audio = new Audio('ressources/sounds/music.ogg');
-        audio.play()
+        audio.play();
         launchGame();
     });
 });

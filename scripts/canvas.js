@@ -1,8 +1,31 @@
 let lastRowCreationTime = 0;
 let gamePaused = false;
-let gameOver = false;
+let gameOver = true;
 let backgroundY = 0; // Variable to control the background position
 let tandem;
+
+const locations = [
+    "Mulhouse",
+    "Thann",
+    "Guebwiller",
+    "Rouffach",
+    "Husseren-les-Chateaux",
+    "Eguisheim",
+    "Colmar",
+    "Kaysersberg",
+    "Riquewihr",
+    "Ribeauvillé",
+    "Bergheim",
+    "Kintzheim",
+    "Sélestat",
+    "Dambach-La-Ville",
+    "Barr",
+    "Obernai",
+    "Molsheim",
+    "Strasbourg"
+];
+
+let distance = 0;
 
 document.addEventListener("DOMContentLoaded", function () {
     const canvas = document.getElementById("glcanvas");
@@ -51,6 +74,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const obstacles = [];
     const coins = [];
 
+    drawBackground();
+    showStart();
+    
     function isColliding(tanLane, tanY, objLane, objY, objHeight) {
         return tanLane == objLane &&
             (tanY < objY + objHeight && tanY > objY);
@@ -85,8 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (!gameOver && isColliding(tandem.lane, tandem.y, obstacle.lane, obstacle.y, obstacle.height)) {
                 obstacles.splice(i, 1);
-                console.log("Obstacle Collision");
-                score -= 1;
+                score -= 2;
             }
         }
     }
@@ -126,10 +151,8 @@ document.addEventListener("DOMContentLoaded", function () {
             if (!gameOver && isColliding(tandem.lane, tandem.y, coin.lane, coin.y, coin.height)) {
                 coins.splice(i, 1);
                 if (coin.gold) {
-                    console.log("Gold Collision");
                     score += 5;
                 } else {
-                    console.log("Coin Collision");
                     score += 1;
                 }
             }
@@ -202,12 +225,25 @@ document.addEventListener("DOMContentLoaded", function () {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
 
+    const scoreDisplay = document.createElement("div");
+    scoreDisplay.style.position = "absolute";
+    scoreDisplay.style.top = "10px";
+    scoreDisplay.style.right = "10px";
+    scoreDisplay.style.color = "white";
+    scoreDisplay.style.font = "20px Arial";
+    document.body.appendChild(scoreDisplay);
+
     function update() {
         clearCanvas();
         drawBackground();
         drawTandem();
         drawObstacles();
         drawCoins();
+                
+        ctx.fillStyle = "white";
+        ctx.font = "35px Arial";
+        ctx.fillText("Score: " + score, canvas.width - 175, 40);
+
     }
 
     function drawTandem() {
@@ -287,6 +323,21 @@ document.addEventListener("DOMContentLoaded", function () {
         ctx.fillText("Restart", canvas.width / 2 - 35, canvas.height / 2 + 75);
     }
 
+    function showStart() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "white";
+        ctx.font = "30px Arial";
+        ctx.fillText("Start Game", canvas.width / 2 - 90, canvas.height / 2 - 50);
+        
+        // Draw Restart button
+        ctx.fillRect(canvas.width / 2 - 75, canvas.height / 2 + 50, 150, 40);
+        ctx.fillStyle = "black";
+        ctx.font = "20px Arial";
+        ctx.fillText("Start", canvas.width / 2 - 35, canvas.height / 2 + 75);
+    }
+
     function handleCanvasClick(event) {
         const rect = canvas.getBoundingClientRect();
         const mouseX = event.clientX - rect.left;
@@ -294,22 +345,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (gameOver) {
             // Check if the click is within the Restart button area
-            if (
-                mouseX > canvas.width / 2 - 75 &&
+            if (mouseX > canvas.width / 2 - 75 &&
                 mouseX < canvas.width / 2 + 75 &&
                 mouseY > canvas.height / 2 + 50 &&
-                mouseY < canvas.height / 2 + 90
-            ) {
+                mouseY < canvas.height / 2 + 90) {
                 restartGame();
             }
         } else if (gamePaused) {
             // Check if the click is within the Resume button area
-            if (
-                mouseX > canvas.width / 2 - 75 &&
+            if (mouseX > canvas.width / 2 - 75 &&
                 mouseX < canvas.width / 2 + 75 &&
                 mouseY > canvas.height / 2 &&
-                mouseY < canvas.height / 2 + 40
-            ) {
+                mouseY < canvas.height / 2 + 40) {
                 gamePaused = false;
                 animate();
             }
@@ -318,6 +365,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function restartGame() {
         score = 0;
+        distance = 0;
         gameOver = false;
         obstacles.length = 0;
         coins.length = 0;
@@ -330,13 +378,18 @@ document.addEventListener("DOMContentLoaded", function () {
     // Clock system for regular canvas updates
     function animate() {
         if (!gamePaused && !gameOver) {
-            update();
-            createRow();
-            backgroundY += canvas.height / 250; // Move the background downward
-            if (backgroundY >= canvas.height) {
-                backgroundY = 0; // Reset the background position when it reaches the bottom
+            if (distance == 18 * 7) {
+                gameOver = true;
+                showScoreboard();
+            } else {
+                update();
+                createRow();
+                backgroundY += canvas.height / 250; // Move the background downward
+                if (backgroundY >= canvas.height) {
+                    backgroundY = 0; // Reset the background position when it reaches the bottom
+                }
+                requestAnimationFrame(animate);
             }
-            requestAnimationFrame(animate);
         }
     }
 
@@ -344,31 +397,8 @@ document.addEventListener("DOMContentLoaded", function () {
     animate();
 });
 
-const locations = [
-    "Mulhouse",
-    "Thann",
-    "Guebwiller",
-    "Rouffach",
-    "Husseren-les-Chateaux",
-    "Eguisheim",
-    "Colmar",
-    "Kaysersberg",
-    "Riquewihr",
-    "Ribeauvillé",
-    "Bergheim",
-    "Kintzheim",
-    "Sélestat",
-    "Dambach-La-Ville",
-    "Barr",
-    "Obernai",
-    "Molsheim",
-    "Strasbourg"
-];
-
-let distance = 0;
-
 function updateDistance() {
-    if (gamePaused)
+    if (gamePaused || gameOver)
         return;
     if (distance % 7 == 0 && distance < locations.length * 7)
         document.getElementById('location').innerText = locations[distance / 7];
