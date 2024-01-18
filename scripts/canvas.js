@@ -1,3 +1,9 @@
+let lastRowCreationTime = 0;
+let gamePaused = false;
+let gameOver = false;
+let backgroundY = 0; // Variable to control the background position
+let tandem;
+
 document.addEventListener("DOMContentLoaded", function () {
     const canvas = document.getElementById("glcanvas");
     const ctx = canvas.getContext("2d");
@@ -16,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const tandemTexture = new Image();
     tandemTexture.src = "../ressources/img/tandem.png";
-    
+
     let score = 0;
 
     function initCanvas() {
@@ -31,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     initCanvas();
 
-    const tandem = {
+    tandem = {
         x: canvas.width / 8,
         y: canvas.height / 10 * 8,
         width: 50,
@@ -45,11 +51,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const obstacles = [];
     const coins = [];
 
-    let lastRowCreationTime = 0;
-    let gamePaused = false;
-    let gameOver = false;
-    let backgroundY = 0; // Variable to control the background position
-
     function isColliding(tanLane, tanY, objLane, objY, objHeight) {
         return tanLane == objLane &&
             (tanY < objY + objHeight && tanY > objY);
@@ -61,6 +62,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function drawObstacles() {
+        if (gamePaused)
+            return;
         for (let i = obstacles.length - 1; i >= 0; i--) {
             const obstacle = obstacles[i];
             const imageWidth = obstacle.width;
@@ -81,14 +84,16 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             if (!gameOver && isColliding(tandem.lane, tandem.y, obstacle.lane, obstacle.y, obstacle.height)) {
+                obstacles.splice(i, 1);
                 console.log("Obstacle Collision");
-                gameOver = true;
-                showScoreboard();
+                score -= 1;
             }
         }
     }
 
     function drawCoins() {
+        if (gamePaused)
+            return;
         for (let i = coins.length - 1; i >= 0; i--) {
             const coin = coins[i];
             const imageWidth = coin.width * 0.50;
@@ -155,7 +160,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         for (let k = 0; k < 4; k++) {
-            if (laneChoice[k] == 0 && Math.floor(Math.random() * 10) == 0) {
+            if (laneChoice[k] == 0 && Math.floor(Math.random() * 5) == 0) {
                 laneChoice[k] = 2;
             }
         }
@@ -219,6 +224,16 @@ document.addEventListener("DOMContentLoaded", function () {
         );
     }
 
+    document.addEventListener('click', function(event) {
+        if (event.target.id === 'leftMove') {
+            moveLeft();
+        }
+
+        if (event.target.id === 'rightMove') {
+            moveRight();
+        }
+    });
+
     function handleKeyPress(event) {
         const keyCode = event.keyCode;
         if (keyCode == 27) {
@@ -232,15 +247,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             }
         } else if (keyCode == 68 || keyCode == 39) {
-            if (tandem.lane < 3 && !gamePaused && !gameOver) {
-                tandem.targetX += tandem.speed;
-                tandem.lane++;
-            }
+            moveRight();
         } else if (keyCode == 81 || keyCode == 37) {
-            if (tandem.lane > 0 && !gamePaused && !gameOver) {
-                tandem.targetX -= tandem.speed;
-                tandem.lane--;
-            }
+            moveLeft();
         }
     }
 
@@ -334,3 +343,53 @@ document.addEventListener("DOMContentLoaded", function () {
     // Start the animation loop
     animate();
 });
+
+const locations = [
+    "Mulhouse",
+    "Thann",
+    "Guebwiller",
+    "Rouffach",
+    "Husseren-les-Chateaux",
+    "Eguisheim",
+    "Colmar",
+    "Kaysersberg",
+    "Riquewihr",
+    "Ribeauvillé",
+    "Bergheim",
+    "Kintzheim",
+    "Sélestat",
+    "Dambach-La-Ville",
+    "Barr",
+    "Obernai",
+    "Molsheim",
+    "Strasbourg"
+];
+
+let distance = 0;
+
+function updateDistance() {
+    if (gamePaused)
+        return;
+    if (distance % 7 == 0 && distance < locations.length * 7)
+        document.getElementById('location').innerText = locations[distance / 7];
+    distance++;
+}
+
+function launchGame()
+{
+    setInterval(updateDistance, 1000);
+}
+
+function moveRight() {
+    if (tandem.lane < 3 && !gamePaused && !gameOver) {
+        tandem.targetX += tandem.speed;
+        tandem.lane++;
+    }
+}
+
+function moveLeft() {
+    if (tandem.lane > 0 && !gamePaused && !gameOver) {
+        tandem.targetX -= tandem.speed;
+        tandem.lane--;
+    }
+}

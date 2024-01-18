@@ -56,7 +56,7 @@ body {
     width: 90%;
     margin: 5%;
     background-color: rgb(172, 172, 172);
-    border: solid 1px black;
+    filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.8));
     border-radius: 5px;
 }
 
@@ -71,6 +71,10 @@ body {
     font-size: 40px;
     font-family: 'Amatic SC', sans-serif;
     font-weight: bold;
+}
+
+.game-btn-container {
+    display: none;
 }
 
 .decor {
@@ -120,6 +124,35 @@ body {
 
     #game-container {
         width: 100%;
+        grid-template-rows: repeat(5, 20vh);
+    }
+
+    #glcanvas {
+        margin-top: 0;
+        grid-row: 2;
+    }
+
+    .game-btn-container {
+        grid-row: 4;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        width: 90%;
+        align-items: center;
+    }
+
+    .game-btn-container > img {
+        width: 200px;
+        height: 200px;
+    }
+
+    .game-btn-container > img:hover {
+        width: 200px;
+        height: 200px;
+    }
+
+    #location {
+        grid-row: 5;
     }
 
     body {
@@ -128,5 +161,9 @@ body {
 
     .vignes {
         width: 100vw;
+    }
+
+    .hidden {
+        display: none;
     }
 }
