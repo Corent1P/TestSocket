@@ -132,6 +132,10 @@ body {
     transition: opacity 0.3s ease-in-out;
 }
 
+.dialogBox:hover {
+    cursor: pointer;
+}
+
 .game {
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
@@ -200,5 +204,9 @@ body {
     .dialogBox {
         grid-row: 3;
         font-size: 50px;
+    }
+
+    .dialogBox:hover {
+        cursor: default;
     }
 }
