@@ -7,7 +7,8 @@ const dialogs = [
         "Ce bar à vin est spécialisé dans la consommation de vin nature.",
         "Les vins natures sont des vins qui sont produits selon certaines règles garantissant le respect du raisin et des sols.",
         "C'est tout d'abord une nouvelle manière de faire du vin mais aussi de le déguster !",
-        "Alors pourquoi ne pas venir tester l'expérience du vin nature dans le bar Le Tandem ?"
+        "Alors pourquoi ne pas venir tester l'expérience du vin nature dans le bar Le Tandem ?",
+        "Pour vous déplacer, sur téléphone cliquez sur les boutons et si vous êtes sur ordinateur, Q (ou flèche gauche) et D (ou flèche droite)."
     ],
     [
         "Vous êtes arrivés à Guebwiller !",
