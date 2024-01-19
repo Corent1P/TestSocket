@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 document.addEventListener('click', function(event) {
-    if (event.target == dialogBox)
+    if (event.target == dialogBox && dialogBox.classList.contains('visible'))
         nextStep();
 });
 
